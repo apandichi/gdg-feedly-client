@@ -1,5 +1,7 @@
 package io.github.gdg_bucharest.gdg_feedly_client;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -23,10 +25,18 @@ public class MainActivity extends ActionBarActivity {
             // https://groups.google.com/forum/#!topic/feedly-cloud/VoI4zk6yGEc
             // https://developer.feedly.com/v3/auth/
             OAuthClientRequest request = OAuthClientRequest
-                    .authorizationLocation("https://sandbox.feedly.com//v3/auth/auth")
+                    .authorizationLocation("https://sandbox.feedly.com/v3/auth/auth")
                     .setClientId("sandbox")
                     .setRedirectURI("http://localhost:8080")
+                    .setParameter("scope", "https://cloud.feedly.com/subscriptions")
+                    .setParameter("response_type", "code")
                     .buildQueryMessage();
+
+            Intent intent = new Intent(Intent.ACTION_VIEW,
+                    Uri.parse(request.getLocationUri()));
+            startActivity(intent);
+
+
         } catch (OAuthSystemException e) {
             e.printStackTrace();
         }
