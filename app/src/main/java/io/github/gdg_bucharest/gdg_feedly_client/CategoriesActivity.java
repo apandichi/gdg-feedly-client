@@ -1,13 +1,10 @@
 package io.github.gdg_bucharest.gdg_feedly_client;
 
-import android.content.Context;
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import org.apache.oltu.oauth2.client.response.OAuthAccessTokenResponse;
+import android.widget.ListView;
 
 import java.util.List;
 
@@ -16,14 +13,16 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 
-public class OauthResponseActivity extends ActionBarActivity {
+public class CategoriesActivity extends ActionBarActivity {
 
     private FeedlyService feedlyService;
+    private ListView categoriesListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_oauth_response);
+        setContentView(R.layout.activity_categories);
+        categoriesListView = (ListView) findViewById(R.id.categories);
         feedlyService = new FeedlyServiceProvider(this).getFeedlyService();
         requestCategories();
     }
@@ -32,7 +31,8 @@ public class OauthResponseActivity extends ActionBarActivity {
         feedlyService.getCategories(new Callback<List<Category>>() {
             @Override
             public void success(List<Category> categories, Response response) {
-                System.out.println(categories);
+                CategoriesAdapter adapter = new CategoriesAdapter(CategoriesActivity.this, categories);
+                categoriesListView.setAdapter(adapter);
             }
 
             @Override
@@ -45,7 +45,7 @@ public class OauthResponseActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_oauth_response, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 

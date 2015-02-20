@@ -29,8 +29,8 @@
 
         </activity>
         <activity
-            android:name=".OauthResponseActivity"
-            android:label="@string/title_activity_oauth_response" >
+            android:name=".CategoriesActivity"
+            android:label="@string/title_activity_categories" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
