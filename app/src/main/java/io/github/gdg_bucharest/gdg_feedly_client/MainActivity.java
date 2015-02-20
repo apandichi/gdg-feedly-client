@@ -92,7 +92,11 @@ public class MainActivity extends ActionBarActivity {
 
                 @Override
                 protected void onPostExecute(OAuthAccessTokenResponse oAuthAccessTokenResponse) {
-                    Intent intent = OauthResponseActivity.newIntent(MainActivity.this, oAuthAccessTokenResponse);
+                    FeedlyServiceProvider feedlyServiceProvider = new FeedlyServiceProvider(MainActivity.this);
+                    feedlyServiceProvider.setAccessToken(oAuthAccessTokenResponse.getAccessToken());
+                    feedlyServiceProvider.setRefreshToken(oAuthAccessTokenResponse.getRefreshToken());
+
+                    Intent intent = new Intent(MainActivity.this, OauthResponseActivity.class);
                     startActivity(intent);
                 }
             }.execute();
