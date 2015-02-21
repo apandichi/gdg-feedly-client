@@ -12,4 +12,7 @@ public interface FeedlyService {
 
     @GET("/categories")
     public void getCategories(Callback<List<Category>> callback);
+
+    @GET("/subscriptions")
+    public void getSubscriptions(Callback<List<Subscription>> callback);
 }
