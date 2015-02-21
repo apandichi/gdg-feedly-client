@@ -2,9 +2,13 @@ package io.github.gdg_bucharest.gdg_feedly_client;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
+
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 
 import java.util.List;
 
@@ -21,10 +25,22 @@ public class CategoriesActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_categories);
+        setContentView(R.layout.activity_drawer);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         categoriesListView = (ListView) findViewById(R.id.categories);
         feedlyService = new FeedlyServiceProvider(this).getFeedlyService();
-        requestCategories();
+        //requestCategories();
+
+
+        Drawer.Result drawer = new Drawer()
+                .withActivity(this)
+                .withToolbar(toolbar)
+                .withActionBarDrawerToggle(true)
+                .withDrawerWidthDp(200)
+                .addDrawerItems(
+                        new PrimaryDrawerItem().withName("Item1").withBadge("3").withIcon(R.mipmap.ic_home).withIdentifier(3)
+                ).build();
     }
 
     private void requestCategories() {
@@ -42,7 +58,7 @@ public class CategoriesActivity extends ActionBarActivity {
         });
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -62,5 +78,5 @@ public class CategoriesActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 }

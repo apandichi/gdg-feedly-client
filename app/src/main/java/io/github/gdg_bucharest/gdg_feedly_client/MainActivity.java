@@ -96,7 +96,7 @@ public class MainActivity extends ActionBarActivity {
                     feedlyServiceProvider.setAccessToken(oAuthAccessTokenResponse.getAccessToken());
                     feedlyServiceProvider.setRefreshToken(oAuthAccessTokenResponse.getRefreshToken());
 
-                    Intent intent = new Intent(MainActivity.this, SubscriptionsActivity.class);
+                    Intent intent = new Intent(MainActivity.this, CategoriesActivity.class);
                     startActivity(intent);
                 }
             }.execute();
