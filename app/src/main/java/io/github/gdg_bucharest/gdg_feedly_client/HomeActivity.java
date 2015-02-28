@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.ListView;
 
 import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
@@ -42,10 +43,11 @@ public class HomeActivity extends ActionBarActivity {
                 .withActivity(this)
                 .withToolbar(toolbar)
                 .withActionBarDrawerToggle(true)
-                .withDrawerWidthDp(200)
+                .withDrawerWidthDp(250)
                 .addDrawerItems(
                     new PrimaryDrawerItem().withName("Home")
-                        .withIcon(R.mipmap.ic_home)
+                        .withIcon(R.mipmap.ic_home),
+                    new DividerDrawerItem()
                 )
                 .build();
 

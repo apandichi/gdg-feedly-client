@@ -1,6 +1,7 @@
 package io.github.gdg_bucharest.gdg_feedly_client.navigation;
 
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import java.util.ArrayList;
@@ -25,17 +26,32 @@ public class GdgNavigation {
         return new ArrayList<>(categories.values());
     }
 
-    public PrimaryDrawerItem[] getCategoryItems() {
-        List<PrimaryDrawerItem> items = new ArrayList<>();
+    public IDrawerItem[] getCategoryItems() {
+        List<IDrawerItem> items = new ArrayList<>();
         for (GdgCategory gdgCategory : categories.values()) {
-            PrimaryDrawerItem primaryDrawerItem = new PrimaryDrawerItem()
-                .withName(gdgCategory.getCategory().label)
-                .withBadge(gdgCategory.getUnreadCount().toString())
-                .withIcon(R.mipmap.ic_home);
-                //.withIdentifier()
-            items.add(primaryDrawerItem);
+            addCategoryItem(items, gdgCategory);
+            addSubscriptionItems(items, gdgCategory);
         }
-        return items.toArray(new PrimaryDrawerItem[]{});
+        return items.toArray(new IDrawerItem[]{});
+    }
+
+    private void addSubscriptionItems(List<IDrawerItem> items, GdgCategory gdgCategory) {
+        for (GdgSubscription gdgSubscription : gdgCategory.getSubscriptions()) {
+            SecondaryDrawerItem secondaryDrawerItem = new SecondaryDrawerItem()
+                    .withName(gdgSubscription.getSubscription().getTitle())
+                    .withBadge(gdgSubscription.getUnreadCount().toString());
+            //.withIdentifier()
+            items.add(secondaryDrawerItem);
+        }
+    }
+
+    private void addCategoryItem(List<IDrawerItem> items, GdgCategory gdgCategory) {
+        PrimaryDrawerItem primaryDrawerItem = new PrimaryDrawerItem()
+            .withName(gdgCategory.getCategory().label)
+            .withBadge(gdgCategory.getUnreadCount().toString())
+            .withIcon(R.mipmap.ic_home);
+        //.withIdentifier()
+        items.add(primaryDrawerItem);
     }
 
     public void loadCategories(List<Category> categoryList) {
