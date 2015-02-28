@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.gdg_bucharest.gdg_feedly_client.feedly.Category;
+import io.github.gdg_bucharest.gdg_feedly_client.feedly.MarkersCounts;
 import io.github.gdg_bucharest.gdg_feedly_client.feedly.Subscription;
 import io.github.gdg_bucharest.gdg_feedly_client.navigation.GdgNavigation;
 import retrofit.Callback;
@@ -58,7 +59,7 @@ public class CategoriesActivity extends ActionBarActivity {
             @Override
             public void success(List<Category> categories, Response response) {
                 gdgNavigation.loadCategories(categories);
-                drawer.addItems(gdgNavigation.getCategoryItems());
+                requestSubscriptions();
             }
 
             @Override
@@ -68,11 +69,27 @@ public class CategoriesActivity extends ActionBarActivity {
         });
     }
 
+    private void requestMarkersCount() {
+        feedlyService.getMarkersCounts(new Callback<MarkersCounts>() {
+            @Override
+            public void success(MarkersCounts markersCounts, Response response) {
+                gdgNavigation.loadMarkersCounts(markersCounts);
+                drawer.addItems(gdgNavigation.getCategoryItems());
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+		System.out.println(error);
+            }
+        });
+    }
+
     private void requestSubscriptions() {
         feedlyService.getSubscriptions(new Callback<List<Subscription>>() {
             @Override
-            public void success(List<Subscription> list, Response response) {
-
+            public void success(List<Subscription> subscriptions, Response response) {
+                gdgNavigation.loadSubscriptions(subscriptions);
+                requestMarkersCount();
             }
 
             @Override

@@ -7,17 +7,5 @@ import java.util.List;
  */
 public class MarkersCounts {
 
-    private List<Count> unreadCounts;
-
-    public List<Count> getUnreadCounts() {
-        return unreadCounts;
-    }
-
-    public void setUnreadCounts(List<Count> unreadCounts) {
-        this.unreadCounts = unreadCounts;
-    }
-
-    public void setUnreadcounts(List<Count> unreadCounts) {
-        this.unreadCounts = unreadCounts;
-    }
+    public List<Count> unreadcounts;
 }

@@ -30,7 +30,7 @@ public class GdgNavigation {
         for (GdgCategory gdgCategory : categories.values()) {
             PrimaryDrawerItem primaryDrawerItem = new PrimaryDrawerItem()
                 .withName(gdgCategory.getCategory().label)
-                //.withBadge(gdgCategory.getUnreadCount().toString())
+                .withBadge(gdgCategory.getUnreadCount().toString())
                 .withIcon(R.mipmap.ic_home);
                 //.withIdentifier()
             items.add(primaryDrawerItem);
@@ -65,7 +65,7 @@ public class GdgNavigation {
     }
 
     public void loadMarkersCounts(MarkersCounts markersCounts) {
-        for (Count count : markersCounts.getUnreadCounts()) {
+        for (Count count : markersCounts.unreadcounts) {
             GdgCount gdgCount = new GdgCount(count);
             setupCount(gdgCount);
         }
@@ -75,7 +75,10 @@ public class GdgNavigation {
         if (gdgCount.getCountType() == GdgCount.CountType.USER_CATEGORY) {
             String categoryId = gdgCount.getCount().getId();
             GdgCategory category = categories.get(categoryId);
-            category.setUnreadCount(gdgCount.getCount().getCount());
+            // some categories omitted, such as global.uncategorized
+            if (category != null) {
+                category.setUnreadCount(gdgCount.getCount().getCount());
+            }
         } else if (gdgCount.getCountType() == GdgCount.CountType.FEED) {
             String subscriptionId = gdgCount.getCount().getId();
             GdgSubscription subscription = subscriptions.get(subscriptionId);
