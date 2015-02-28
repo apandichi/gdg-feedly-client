@@ -21,7 +21,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 
-public class CategoriesActivity extends ActionBarActivity {
+public class HomeActivity extends ActionBarActivity {
 
     private FeedlyService feedlyService;
     private ListView categoriesListView;
