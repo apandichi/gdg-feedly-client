@@ -12,6 +12,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import io.github.gdg_bucharest.gdg_feedly_client.feedly.Subscription;
+
 /**
  * Created by pndl on 2/20/15.
  */

@@ -1,9 +1,10 @@
-package io.github.gdg_bucharest.gdg_feedly_client;
+package io.github.gdg_bucharest.gdg_feedly_client.feedly;
 
 /**
  * Created by pndl on 2/16/15.
  */
 public class Category {
+
     public String label;
     public String id;
 

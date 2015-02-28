@@ -1,11 +1,11 @@
-package io.github.gdg_bucharest.gdg_feedly_client;
+package io.github.gdg_bucharest.gdg_feedly_client.feedly;
 
 import android.text.TextUtils;
 
-import org.apache.commons.codec.binary.StringUtils;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import io.github.gdg_bucharest.gdg_feedly_client.feedly.Category;
 
 /**
  * Created by pndl on 2/21/15.

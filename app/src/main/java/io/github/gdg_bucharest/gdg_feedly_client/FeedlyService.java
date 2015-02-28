@@ -2,6 +2,10 @@ package io.github.gdg_bucharest.gdg_feedly_client;
 
 import java.util.List;
 
+import io.github.gdg_bucharest.gdg_feedly_client.feedly.Category;
+import io.github.gdg_bucharest.gdg_feedly_client.feedly.Count;
+import io.github.gdg_bucharest.gdg_feedly_client.feedly.MarkersCounts;
+import io.github.gdg_bucharest.gdg_feedly_client.feedly.Subscription;
 import retrofit.Callback;
 import retrofit.http.GET;
 
@@ -15,4 +19,7 @@ public interface FeedlyService {
 
     @GET("/subscriptions")
     public void getSubscriptions(Callback<List<Subscription>> callback);
+
+    @GET("/markers/counts")
+    public void getMarkersCounts(Callback<MarkersCounts> callback);
 }

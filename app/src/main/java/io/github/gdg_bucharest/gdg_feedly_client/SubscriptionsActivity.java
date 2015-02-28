@@ -8,6 +8,7 @@ import android.widget.ListView;
 
 import java.util.List;
 
+import io.github.gdg_bucharest.gdg_feedly_client.feedly.Subscription;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
