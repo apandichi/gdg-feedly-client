@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="MaterialDrawerTheme">
+    <style name="AppTheme" parent="Theme.AppCompat">
         <item name="android:textViewStyle">@android:style/TextAppearance.Medium</item>
     </style>
 

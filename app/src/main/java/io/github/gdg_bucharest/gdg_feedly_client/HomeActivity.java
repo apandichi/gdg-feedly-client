@@ -13,10 +13,7 @@ import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.SimpleExpandableListAdapter;
 
-import com.mikepenz.materialdrawer.Drawer;
-import com.mikepenz.materialdrawer.model.DividerDrawerItem;
-import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,30 +48,44 @@ public class HomeActivity extends ActionBarActivity {
 
 
 //        setupMaterialDrawer();
-        setupDrawer();
+//        setupDrawer();
+        setupSlidingMenu();
 
         requestCategories();
+    }
+
+    private void setupSlidingMenu() {
+        SlidingMenu menu = new SlidingMenu(this);
+        menu.setMode(SlidingMenu.LEFT);
+        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        menu.setShadowWidthRes(R.dimen.shadow_width);
+        menu.setShadowDrawable(R.drawable.shadow);
+        menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+        menu.setFadeDegree(0.35f);
+//        menu.setMenu(R.layout.menu);
+        menu.setMenu(R.layout.drawer);
+        menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
     }
 
     private void setupMaterialDrawer() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        Drawer.Result drawer = new Drawer()
-                .withActivity(this)
-                .withToolbar(toolbar)
+//
+//        Drawer.Result drawer = new Drawer()
+//                .withActivity(this)
+//                .withToolbar(toolbar)
 //                .withListView(listView)
 //                .withAdapter(adapter)
-                .withActionBarDrawerToggle(true)
-                .withDrawerWidthDp(250)
-                .addDrawerItems(
-                        new PrimaryDrawerItem().withName("Home")
-                                .withIcon(R.mipmap.ic_home),
-                        new DividerDrawerItem()
-                )
-                .build();
-
-        drawer.openDrawer();
+//                .withActionBarDrawerToggle(true)
+//                .withDrawerWidthDp(250)
+//                .addDrawerItems(
+//                        new PrimaryDrawerItem().withName("Home")
+//                                .withIcon(R.mipmap.ic_home),
+//                        new DividerDrawerItem()
+//                )
+//                .build();
+//
+//        drawer.openDrawer();
     }
 
     private void setupDrawer() {
@@ -93,22 +104,22 @@ public class HomeActivity extends ActionBarActivity {
             }
         });
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         mDrawerLayout.setDrawerListener(new ActionBarDrawerToggle(this, mDrawerLayout,
                 toolbar, R.string.drawer_open, R.string.drawer_close) {
 
-            /** Called when a drawer has settled in a completely closed state. */
+            *//** Called when a drawer has settled in a completely closed state. *//*
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
 //                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
-            /** Called when a drawer has settled in a completely open state. */
+            *//** Called when a drawer has settled in a completely open state. *//*
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
 //                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
-        });
+        });*/
     }
 
     private void requestCategories() {

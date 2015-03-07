@@ -1,8 +1,5 @@
 package io.github.gdg_bucharest.gdg_feedly_client.navigation;
 
-import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,7 +27,7 @@ public class GdgNavigation {
 //        return new ArrayList<>(subscriptions.values());
 //    }
 
-    public IDrawerItem[] getCategoryItems() {
+    /*public IDrawerItem[] getCategoryItems() {
         List<IDrawerItem> items = new ArrayList<>();
         for (GdgCategory gdgCategory : categories.values()) {
             addCategoryItem(items, gdgCategory);
@@ -56,7 +53,7 @@ public class GdgNavigation {
             .withIcon(R.mipmap.ic_home);
         //.withIdentifier()
         items.add(primaryDrawerItem);
-    }
+    }*/
 
     public void loadCategories(List<Category> categoryList) {
         HashMap<String, GdgCategory> categoriesMap = new HashMap<>();
