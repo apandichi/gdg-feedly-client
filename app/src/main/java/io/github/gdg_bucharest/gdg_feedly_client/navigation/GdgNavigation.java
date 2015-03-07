@@ -22,9 +22,13 @@ public class GdgNavigation {
     private HashMap<String, GdgCategory> categories = new HashMap<>();
     private HashMap<String, GdgSubscription> subscriptions = new HashMap<>();
 
-    private List<GdgCategory> getGdgCategories() {
-        return new ArrayList<>(categories.values());
-    }
+//    public List<GdgCategory> getGdgCategories() {
+//        return new ArrayList<>(categories.values());
+//    }
+//
+//    public List<GdgSubscription> getGdgSubscriptions() {
+//        return new ArrayList<>(subscriptions.values());
+//    }
 
     public IDrawerItem[] getCategoryItems() {
         List<IDrawerItem> items = new ArrayList<>();

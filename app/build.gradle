@@ -33,5 +33,13 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.0'
 
     compile('com.mikepenz.materialdrawer:library:0.9.8')
+//    compile(name:'lib-1.0.7', ext:'aar')
+//    compile 'com.mikepenz.iconics:library:0.7.5@aar'
 
+}
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
 }
