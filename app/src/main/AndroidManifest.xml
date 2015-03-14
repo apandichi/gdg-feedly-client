@@ -36,6 +36,11 @@
             android:name=".SubscriptionsActivity"
             android:label="@string/title_activity_subscriptions" >
         </activity>
+
+        <activity
+            android:name=".slidingmenu.AttachExample"
+            android:label="@string/title_activity_subscriptions" >
+        </activity>
     </application>
 
 </manifest>

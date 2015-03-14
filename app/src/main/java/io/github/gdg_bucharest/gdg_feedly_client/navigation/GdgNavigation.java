@@ -1,6 +1,13 @@
 package io.github.gdg_bucharest.gdg_feedly_client.navigation;
 
 
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseExpandableListAdapter;
+import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,46 +21,16 @@ import io.github.gdg_bucharest.gdg_feedly_client.feedly.Subscription;
 /**
  * Created by pndl on 2/28/15.
  */
-public class GdgNavigation {
+public class GdgNavigation extends BaseExpandableListAdapter {
+
+    private Context context;
 
     private HashMap<String, GdgCategory> categories = new HashMap<>();
     private HashMap<String, GdgSubscription> subscriptions = new HashMap<>();
 
-//    public List<GdgCategory> getGdgCategories() {
-//        return new ArrayList<>(categories.values());
-//    }
-//
-//    public List<GdgSubscription> getGdgSubscriptions() {
-//        return new ArrayList<>(subscriptions.values());
-//    }
-
-    /*public IDrawerItem[] getCategoryItems() {
-        List<IDrawerItem> items = new ArrayList<>();
-        for (GdgCategory gdgCategory : categories.values()) {
-            addCategoryItem(items, gdgCategory);
-            addSubscriptionItems(items, gdgCategory);
-        }
-        return items.toArray(new IDrawerItem[]{});
+    public GdgNavigation(Context context) {
+        this.context = context;
     }
-
-    private void addSubscriptionItems(List<IDrawerItem> items, GdgCategory gdgCategory) {
-        for (GdgSubscription gdgSubscription : gdgCategory.getSubscriptions()) {
-            SecondaryDrawerItem secondaryDrawerItem = new SecondaryDrawerItem()
-                    .withName(gdgSubscription.getSubscription().getTitle())
-                    .withBadge(gdgSubscription.getUnreadCount().toString());
-            //.withIdentifier()
-            items.add(secondaryDrawerItem);
-        }
-    }
-
-    private void addCategoryItem(List<IDrawerItem> items, GdgCategory gdgCategory) {
-        PrimaryDrawerItem primaryDrawerItem = new PrimaryDrawerItem()
-            .withName(gdgCategory.getCategory().label)
-            .withBadge(gdgCategory.getUnreadCount().toString())
-            .withIcon(R.mipmap.ic_home);
-        //.withIdentifier()
-        items.add(primaryDrawerItem);
-    }*/
 
     public void loadCategories(List<Category> categoryList) {
         HashMap<String, GdgCategory> categoriesMap = new HashMap<>();
@@ -101,5 +78,69 @@ public class GdgNavigation {
             GdgSubscription subscription = subscriptions.get(subscriptionId);
             subscription.setUnreadCount(gdgCount.getCount().getCount());
         }
+    }
+
+    @Override
+    public int getGroupCount() {
+        return categories.size();
+    }
+
+    @Override
+    public int getChildrenCount(int groupPosition) {
+        return getGroup(groupPosition).getSubscriptions().size();
+    }
+
+    @Override
+    public GdgCategory getGroup(int groupPosition) {
+        return categories.values().toArray(new GdgCategory[]{})[groupPosition];
+    }
+
+    @Override
+    public GdgSubscription getChild(int groupPosition, int childPosition) {
+        return getGroup(groupPosition).getSubscriptions().get(childPosition);
+    }
+
+    @Override
+    public long getGroupId(int groupPosition) {
+        return 0;
+    }
+
+    @Override
+    public long getChildId(int groupPosition, int childPosition) {
+        return 0;
+    }
+
+    @Override
+    public boolean hasStableIds() {
+        return false;
+    }
+
+    @Override
+    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+        if(convertView == null){
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.drawer_item_primary, null);
+        }
+        GdgCategory group = getGroup(groupPosition);
+        TextView textView = (TextView) convertView.findViewById(R.id.name);
+        textView.setText(group.getCategory().label);
+        return convertView;
+    }
+
+    @Override
+    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+        if(convertView == null){
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.drawer_item_secondary, null);
+        }
+        GdgSubscription child = getChild(groupPosition, childPosition);
+        TextView textView = (TextView) convertView.findViewById(R.id.name);
+        textView.setText(child.getSubscription().getTitle());
+        return convertView;
+    }
+
+    @Override
+    public boolean isChildSelectable(int groupPosition, int childPosition) {
+        return true;
     }
 }

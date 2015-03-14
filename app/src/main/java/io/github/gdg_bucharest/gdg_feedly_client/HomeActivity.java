@@ -32,94 +32,34 @@ public class HomeActivity extends ActionBarActivity {
     private FeedlyService feedlyService;
     private ListView categoriesListView;
 
-    GdgNavigation gdgNavigation = new GdgNavigation();
-//    Drawer.Result drawer;
-
-    private DrawerLayout mDrawerLayout;
-    private ListView mDrawerList;
+    private GdgNavigation gdgNavigation;
+    private SlidingMenu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.drawer);
+        setContentView(R.layout.activity_categories);
+        gdgNavigation = new GdgNavigation(this);
 
         categoriesListView = (ListView) findViewById(R.id.categories);
         feedlyService = new FeedlyServiceProvider(this).getFeedlyService();
 
-
-//        setupMaterialDrawer();
-//        setupDrawer();
         setupSlidingMenu();
-
         requestCategories();
     }
 
     private void setupSlidingMenu() {
-        SlidingMenu menu = new SlidingMenu(this);
+        menu = new SlidingMenu(this);
         menu.setMode(SlidingMenu.LEFT);
         menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
         menu.setShadowWidthRes(R.dimen.shadow_width);
         menu.setShadowDrawable(R.drawable.shadow);
         menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
         menu.setFadeDegree(0.35f);
-//        menu.setMenu(R.layout.menu);
         menu.setMenu(R.layout.drawer);
         menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-    }
 
-    private void setupMaterialDrawer() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-//
-//        Drawer.Result drawer = new Drawer()
-//                .withActivity(this)
-//                .withToolbar(toolbar)
-//                .withListView(listView)
-//                .withAdapter(adapter)
-//                .withActionBarDrawerToggle(true)
-//                .withDrawerWidthDp(250)
-//                .addDrawerItems(
-//                        new PrimaryDrawerItem().withName("Home")
-//                                .withIcon(R.mipmap.ic_home),
-//                        new DividerDrawerItem()
-//                )
-//                .build();
-//
-//        drawer.openDrawer();
-    }
 
-    private void setupDrawer() {
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
-
-        String[] mPlanetTitles = new String[] {"a", "b", "c"};
-        mDrawerList.setAdapter(new ArrayAdapter<>(this,
-                R.layout.drawer_list_item,
-                R.id.title,
-                mPlanetTitles));
-        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-        });
-
-        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        mDrawerLayout.setDrawerListener(new ActionBarDrawerToggle(this, mDrawerLayout,
-                toolbar, R.string.drawer_open, R.string.drawer_close) {
-
-            *//** Called when a drawer has settled in a completely closed state. *//*
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-//                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-
-            *//** Called when a drawer has settled in a completely open state. *//*
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-//                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-        });*/
     }
 
     private void requestCategories() {
@@ -142,7 +82,9 @@ public class HomeActivity extends ActionBarActivity {
             @Override
             public void success(MarkersCounts markersCounts, Response response) {
                 gdgNavigation.loadMarkersCounts(markersCounts);
-//                drawer.addItems(gdgNavigation.getCategoryItems());
+                // http://stackoverflow.com/questions/20916692/expandablelistview-drill-down-in-sliding-menu
+                ExpandableListView listView = (ExpandableListView) menu.getMenu().findViewById(R.id.left_drawer);
+                listView.setAdapter(gdgNavigation);
             }
 
             @Override

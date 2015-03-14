@@ -1,4 +1,4 @@
-package io.github.gdg_bucharest.gdg_feedly_client;
+package io.github.gdg_bucharest.gdg_feedly_client.slidingmenu;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,12 +10,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import io.github.gdg_bucharest.gdg_feedly_client.R;
+
 /**
  * Created by pndl on 3/7/15.
  */
 public class SampleListFragment extends ListFragment {
 
-    /*public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.list, null);
     }
 
@@ -55,5 +57,5 @@ public class SampleListFragment extends ListFragment {
             return convertView;
         }
 
-    }*/
+    }
 }
