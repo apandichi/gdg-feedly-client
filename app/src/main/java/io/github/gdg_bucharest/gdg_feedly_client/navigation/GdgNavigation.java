@@ -124,6 +124,9 @@ public class GdgNavigation extends BaseExpandableListAdapter {
         GdgCategory group = getGroup(groupPosition);
         TextView textView = (TextView) convertView.findViewById(R.id.name);
         textView.setText(group.getCategory().label);
+
+        textView = (TextView) convertView.findViewById(R.id.badge);
+        textView.setText(group.getUnreadCount().toString());
         return convertView;
     }
 
@@ -136,6 +139,9 @@ public class GdgNavigation extends BaseExpandableListAdapter {
         GdgSubscription child = getChild(groupPosition, childPosition);
         TextView textView = (TextView) convertView.findViewById(R.id.name);
         textView.setText(child.getSubscription().getTitle());
+
+        textView = (TextView) convertView.findViewById(R.id.badge);
+        textView.setText(child.getUnreadCount().toString());
         return convertView;
     }
 

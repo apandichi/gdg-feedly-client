@@ -8,4 +8,37 @@
     <dimen name="shadow_width">15dp</dimen>
 
     <integer name="num_cols">1</integer>
+
+
+    <!-- From: file:/Users/mikepenz/GoogleDrive/Development/AndroidLibraries/MaterialDrawer/library/src/main/res/values/colors.xml -->
+    <eat-comment/>
+    <color name="material_drawer_accent">#FF4081</color>
+    <color name="material_drawer_background">#F9F9F9</color>
+    <color name="material_drawer_divider">#B6B6B6</color>
+    <color name="material_drawer_hint_text">#B8B8B8</color>
+    <color name="material_drawer_icons">#FFF</color>
+    <color name="material_drawer_primary">#2196F3</color>
+    <color name="material_drawer_primary_dark">#1976D2</color>
+    <color name="material_drawer_primary_light">#BBDEFB</color>
+    <color name="material_drawer_primary_text">#212121</color>
+    <color name="material_drawer_secondary_text">#727272</color>
+    <color name="material_drawer_selected">#E8E8E8</color>
+    <color name="material_drawer_selected_text">#2196F3</color>
+    <color name="material_drawer_window_background">#F9F9F9</color>
+    <!-- From: file:/Users/mikepenz/GoogleDrive/Development/AndroidLibraries/MaterialDrawer/library/src/main/res/values/dimens.xml -->
+    <eat-comment/>
+    <dimen name="material_drawer_item_padding">8dp</dimen>
+    <dimen name="material_drawer_item_primary">48dp</dimen>
+    <dimen name="material_drawer_item_primary_icon_padding">12dp</dimen>
+    <dimen name="material_drawer_item_primary_icon_padding_right">24dp</dimen>
+    <dimen name="material_drawer_item_primary_text">14sp</dimen>
+    <dimen name="material_drawer_item_secondary">42dp</dimen>
+    <dimen name="material_drawer_item_secondary_icon_padding">12dp</dimen>
+    <dimen name="material_drawer_item_secondary_icon_padding_right">24dp</dimen>
+    <dimen name="material_drawer_item_secondary_text">14sp</dimen>
+    <dimen name="material_drawer_item_section_text">14sp</dimen>
+    <dimen name="material_drawer_margin">0dp</dimen>
+    <dimen name="material_drawer_padding">8dp</dimen>
+    <dimen name="material_drawer_vertical_padding">16dp</dimen>
+    <dimen name="tool_bar_top_padding">0dp</dimen>
 </resources>
