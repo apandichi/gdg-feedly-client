@@ -1,26 +1,18 @@
 package io.github.gdg_bucharest.gdg_feedly_client;
 
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
-import android.widget.SimpleExpandableListAdapter;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.github.gdg_bucharest.gdg_feedly_client.feedly.Category;
 import io.github.gdg_bucharest.gdg_feedly_client.feedly.MarkersCounts;
 import io.github.gdg_bucharest.gdg_feedly_client.feedly.Profile;
+import io.github.gdg_bucharest.gdg_feedly_client.feedly.StreamContents;
 import io.github.gdg_bucharest.gdg_feedly_client.feedly.Subscription;
 import io.github.gdg_bucharest.gdg_feedly_client.navigation.GdgNavigation;
 import retrofit.Callback;
@@ -31,7 +23,7 @@ import retrofit.client.Response;
 public class HomeActivity extends ActionBarActivity {
 
     private FeedlyService feedlyService;
-    private ListView categoriesListView;
+    private ListView entriesListView;
 
     private GdgNavigation gdgNavigation;
     private SlidingMenu menu;
@@ -39,10 +31,10 @@ public class HomeActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_categories);
+        setContentView(R.layout.activity_home);
         gdgNavigation = new GdgNavigation(this);
 
-        categoriesListView = (ListView) findViewById(R.id.categories);
+        entriesListView = (ListView) findViewById(R.id.entries);
         feedlyService = new FeedlyServiceProvider(this).getFeedlyService();
 
         setupSlidingMenu();
@@ -54,12 +46,28 @@ public class HomeActivity extends ActionBarActivity {
         feedlyService.getProfile(new Callback<Profile>() {
             @Override
             public void success(Profile profile, Response response) {
-
+                requestGlobalContents(profile.getId());
             }
 
             @Override
             public void failure(RetrofitError error) {
+                System.out.println(error);
+            }
+        });
+    }
 
+    private void requestGlobalContents(String userId) {
+        String streamId = "user/{userId}/category/global.all".replace("{userId}", userId);
+        feedlyService.getStreamContents(streamId, new Callback<StreamContents>() {
+            @Override
+            public void success(StreamContents streamContents, Response response) {
+                EntryAdapter adapter = new EntryAdapter(HomeActivity.this, streamContents.getItems());
+                entriesListView.setAdapter(adapter);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                System.out.println(error);
             }
         });
     }

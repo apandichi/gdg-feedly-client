@@ -9,29 +9,29 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import io.github.gdg_bucharest.gdg_feedly_client.feedly.Category;
+import io.github.gdg_bucharest.gdg_feedly_client.feedly.Entry;
 
 /**
  * Created by pndl on 2/20/15.
  */
-public class CategoriesAdapter extends BaseAdapter {
+public class EntryAdapter extends BaseAdapter {
 
     private Context context;
-    private List<Category> categories;
+    private List<Entry> entries;
 
-    public CategoriesAdapter(Context context, List<Category> categories) {
+    public EntryAdapter(Context context, List<Entry> entries) {
         this.context = context;
-        this.categories = categories;
+        this.entries = entries;
     }
 
     @Override
     public int getCount() {
-        return categories.size();
+        return entries.size();
     }
 
     @Override
-    public Category getItem(int position) {
-        return categories.get(position);
+    public Entry getItem(int position) {
+        return entries.get(position);
     }
 
     @Override
@@ -43,11 +43,11 @@ public class CategoriesAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(context);
-            convertView = inflater.inflate(R.layout.item_category, parent, false);
+            convertView = inflater.inflate(R.layout.item_entry, parent, false);
         }
 
-        TextView categoryName = (TextView) convertView.findViewById(R.id.category_name);
-        categoryName.setText(getItem(position).label);
+        TextView title = (TextView) convertView.findViewById(R.id.title);
+        title.setText(getItem(position).getTitle());
 
         return convertView;
 

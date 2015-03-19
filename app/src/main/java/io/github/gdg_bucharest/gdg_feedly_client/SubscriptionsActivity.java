@@ -22,8 +22,8 @@ public class SubscriptionsActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_categories);
-        subscriptionsListView = (ListView) findViewById(R.id.categories);
+        setContentView(R.layout.activity_home);
+        subscriptionsListView = (ListView) findViewById(R.id.entries);
         feedlyService = new FeedlyServiceProvider(this).getFeedlyService();
 
         requestSubscriptions();
