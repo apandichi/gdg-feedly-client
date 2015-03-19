@@ -2,6 +2,7 @@ package io.github.gdg_bucharest.gdg_feedly_client;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 
@@ -15,6 +16,7 @@ import io.github.gdg_bucharest.gdg_feedly_client.feedly.Profile;
 import io.github.gdg_bucharest.gdg_feedly_client.feedly.StreamContents;
 import io.github.gdg_bucharest.gdg_feedly_client.feedly.Subscription;
 import io.github.gdg_bucharest.gdg_feedly_client.navigation.GdgNavigation;
+import io.github.gdg_bucharest.gdg_feedly_client.navigation.GdgSubscription;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -57,7 +59,11 @@ public class HomeActivity extends ActionBarActivity {
     }
 
     private void requestGlobalContents(String userId) {
-        String streamId = "user/{userId}/category/global.all".replace("{userId}", userId);
+        String globalCategoryId = "user/{userId}/category/global.all".replace("{userId}", userId);
+        requestStreamContents(globalCategoryId);
+    }
+
+    private void requestStreamContents(String streamId) {
         feedlyService.getStreamContents(streamId, new Callback<StreamContents>() {
             @Override
             public void success(StreamContents streamContents, Response response) {
@@ -107,13 +113,26 @@ public class HomeActivity extends ActionBarActivity {
             public void success(MarkersCounts markersCounts, Response response) {
                 gdgNavigation.loadMarkersCounts(markersCounts);
                 // http://stackoverflow.com/questions/20916692/expandablelistview-drill-down-in-sliding-menu
-                ExpandableListView listView = (ExpandableListView) menu.getMenu().findViewById(R.id.left_drawer);
-                listView.setAdapter(gdgNavigation);
+                configureGdgNavigation();
             }
 
             @Override
             public void failure(RetrofitError error) {
 		System.out.println(error);
+            }
+        });
+    }
+
+    private void configureGdgNavigation() {
+        final ExpandableListView listView = (ExpandableListView) menu.getMenu().findViewById(R.id.left_drawer);
+        listView.setAdapter(gdgNavigation);
+        listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                GdgSubscription gdgSubscription = gdgNavigation.getChild(groupPosition, childPosition);
+                String subscriptionId = gdgSubscription.getSubscription().getId();
+                requestStreamContents(subscriptionId);
+                return true;
             }
         });
     }
