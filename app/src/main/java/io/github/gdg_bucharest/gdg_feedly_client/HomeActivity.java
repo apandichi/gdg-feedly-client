@@ -5,12 +5,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.github.gdg_bucharest.gdg_feedly_client.feedly.Category;
+import io.github.gdg_bucharest.gdg_feedly_client.feedly.Entry;
 import io.github.gdg_bucharest.gdg_feedly_client.feedly.MarkersCounts;
 import io.github.gdg_bucharest.gdg_feedly_client.feedly.Profile;
 import io.github.gdg_bucharest.gdg_feedly_client.feedly.StreamContents;
@@ -29,6 +32,7 @@ public class HomeActivity extends ActionBarActivity {
 
     private GdgNavigation gdgNavigation;
     private SlidingMenu menu;
+    private ProgressBar loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,8 @@ public class HomeActivity extends ActionBarActivity {
         gdgNavigation = new GdgNavigation(this);
 
         entriesListView = (ListView) findViewById(R.id.entries);
+        loading = (ProgressBar) findViewById(R.id.loading);
+        loading.setVisibility(View.GONE);
         feedlyService = new FeedlyServiceProvider(this).getFeedlyService();
 
         setupSlidingMenu();
@@ -64,11 +70,17 @@ public class HomeActivity extends ActionBarActivity {
     }
 
     private void requestStreamContents(String streamId) {
+        EntryAdapter adapter = new EntryAdapter(HomeActivity.this, new ArrayList<Entry>());
+        entriesListView.setAdapter(adapter);
+        //
+        loading.setVisibility(View.VISIBLE);
+        //
         feedlyService.getStreamContents(streamId, new Callback<StreamContents>() {
             @Override
             public void success(StreamContents streamContents, Response response) {
                 EntryAdapter adapter = new EntryAdapter(HomeActivity.this, streamContents.getItems());
                 entriesListView.setAdapter(adapter);
+                loading.setVisibility(View.GONE);
             }
 
             @Override
@@ -132,6 +144,7 @@ public class HomeActivity extends ActionBarActivity {
                 GdgSubscription gdgSubscription = gdgNavigation.getChild(groupPosition, childPosition);
                 String subscriptionId = gdgSubscription.getSubscription().getId();
                 requestStreamContents(subscriptionId);
+                menu.showContent();
                 return true;
             }
         });
