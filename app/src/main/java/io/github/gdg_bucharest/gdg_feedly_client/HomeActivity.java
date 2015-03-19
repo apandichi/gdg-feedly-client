@@ -20,6 +20,7 @@ import java.util.List;
 
 import io.github.gdg_bucharest.gdg_feedly_client.feedly.Category;
 import io.github.gdg_bucharest.gdg_feedly_client.feedly.MarkersCounts;
+import io.github.gdg_bucharest.gdg_feedly_client.feedly.Profile;
 import io.github.gdg_bucharest.gdg_feedly_client.feedly.Subscription;
 import io.github.gdg_bucharest.gdg_feedly_client.navigation.GdgNavigation;
 import retrofit.Callback;
@@ -46,6 +47,21 @@ public class HomeActivity extends ActionBarActivity {
 
         setupSlidingMenu();
         requestCategories();
+        requestProfile();
+    }
+
+    private void requestProfile() {
+        feedlyService.getProfile(new Callback<Profile>() {
+            @Override
+            public void success(Profile profile, Response response) {
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
     }
 
     private void setupSlidingMenu() {
