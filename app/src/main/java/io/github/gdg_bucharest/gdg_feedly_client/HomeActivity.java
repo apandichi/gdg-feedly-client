@@ -136,6 +136,7 @@ public class HomeActivity extends ActionBarActivity {
     }
 
     private void configureGdgNavigation() {
+        gdgNavigation.filterCategories();
         final ExpandableListView listView = (ExpandableListView) menu.getMenu().findViewById(R.id.left_drawer);
         listView.setAdapter(gdgNavigation);
         listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {

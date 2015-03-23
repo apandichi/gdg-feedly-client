@@ -8,9 +8,14 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.Maps;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.github.gdg_bucharest.gdg_feedly_client.R;
 import io.github.gdg_bucharest.gdg_feedly_client.feedly.Category;
@@ -25,8 +30,11 @@ public class GdgNavigation extends BaseExpandableListAdapter {
 
     private Context context;
 
-    private HashMap<String, GdgCategory> categories = new HashMap<>();
-    private HashMap<String, GdgSubscription> subscriptions = new HashMap<>();
+    private Map<String, GdgCategory> categories = new HashMap<>();
+    private Map<String, GdgSubscription> subscriptions = new HashMap<>();
+
+    private Map<String, GdgCategory> categoriesFiltered = new HashMap<>();
+    private Map<String, GdgSubscription> subscriptionsFiltered = new HashMap<>();
 
     public GdgNavigation(Context context) {
         this.context = context;
@@ -82,22 +90,24 @@ public class GdgNavigation extends BaseExpandableListAdapter {
 
     @Override
     public int getGroupCount() {
-        return categories.size();
+        return categoriesFiltered.size();
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return getGroup(groupPosition).getSubscriptions().size();
+        List<GdgSubscription> gdgSubscriptions = getGroup(groupPosition).getSubscriptions();
+        return filterSubscriptions(gdgSubscriptions).size();
     }
 
     @Override
     public GdgCategory getGroup(int groupPosition) {
-        return categories.values().toArray(new GdgCategory[]{})[groupPosition];
+        return categoriesFiltered.values().toArray(new GdgCategory[]{})[groupPosition];
     }
 
     @Override
     public GdgSubscription getChild(int groupPosition, int childPosition) {
-        return getGroup(groupPosition).getSubscriptions().get(childPosition);
+        List<GdgSubscription> gdgSubscriptions = getGroup(groupPosition).getSubscriptions();
+        return filterSubscriptions(gdgSubscriptions).toArray(new GdgSubscription[] {})[childPosition];
     }
 
     @Override
@@ -148,5 +158,23 @@ public class GdgNavigation extends BaseExpandableListAdapter {
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
+    }
+
+    public void filterCategories() {
+        categoriesFiltered = Maps.filterValues(categories, new Predicate<GdgCategory>() {
+            @Override
+            public boolean apply(GdgCategory input) {
+                return input.getUnreadCount() != 0;
+            }
+        });
+    }
+
+    private java.util.Collection<GdgSubscription> filterSubscriptions(List<GdgSubscription> gdgSubscriptions) {
+        return Collections2.filter(gdgSubscriptions, new Predicate<GdgSubscription>() {
+            @Override
+            public boolean apply(GdgSubscription input) {
+                return input.getUnreadCount() != 0;
+            }
+        });
     }
 }
