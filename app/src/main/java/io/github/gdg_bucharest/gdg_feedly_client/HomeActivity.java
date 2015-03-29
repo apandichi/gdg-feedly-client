@@ -75,7 +75,8 @@ public class HomeActivity extends ActionBarActivity {
         //
         loading.setVisibility(View.VISIBLE);
         //
-        feedlyService.getStreamContents(streamId, new Callback<StreamContents>() {
+        boolean unreadOnly = true;
+        feedlyService.getStreamContents(streamId, unreadOnly, new Callback<StreamContents>() {
             @Override
             public void success(StreamContents streamContents, Response response) {
                 EntryAdapter adapter = new EntryAdapter(HomeActivity.this, streamContents.getItems());

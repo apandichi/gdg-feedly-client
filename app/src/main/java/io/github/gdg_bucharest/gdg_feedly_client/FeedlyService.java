@@ -21,7 +21,7 @@ public interface FeedlyService {
     public void getProfile(Callback<Profile> callback);
 
     @GET("/streams/contents")
-    public void getStreamContents(@Query("streamId") String streamId, Callback<StreamContents> callback);
+    public void getStreamContents(@Query("streamId") String streamId, @Query("unreadOnly") boolean unreadOnly, Callback<StreamContents> callback);
 
     @GET("/categories")
     public void getCategories(Callback<List<Category>> callback);
