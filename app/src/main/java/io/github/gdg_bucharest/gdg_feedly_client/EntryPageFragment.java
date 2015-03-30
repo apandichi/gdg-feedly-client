@@ -3,6 +3,7 @@ package io.github.gdg_bucharest.gdg_feedly_client;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,10 +54,10 @@ public class EntryPageFragment extends Fragment {
 
         if (entry.getContent() != null) {
             TextView content = (TextView) view.findViewById(R.id.entry_page_content);
-            content.setText(entry.getContent().getContent());
+            content.setText(Html.fromHtml(entry.getContent().getContent()));
         } else if (entry.getSummary() != null) {
             TextView content = (TextView) view.findViewById(R.id.entry_page_content);
-            content.setText(entry.getSummary().getContent());
+            content.setText(Html.fromHtml(entry.getSummary().getContent()));
         }
 
         return view;
