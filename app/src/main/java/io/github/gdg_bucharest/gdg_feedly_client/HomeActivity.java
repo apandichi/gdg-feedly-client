@@ -1,8 +1,10 @@
 package io.github.gdg_bucharest.gdg_feedly_client;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -70,17 +72,22 @@ public class HomeActivity extends ActionBarActivity {
     }
 
     private void requestStreamContents(String streamId) {
+        loading.setVisibility(View.VISIBLE);
         EntryAdapter adapter = new EntryAdapter(HomeActivity.this, new ArrayList<Entry>());
         entriesListView.setAdapter(adapter);
-        //
-        loading.setVisibility(View.VISIBLE);
-        //
         boolean unreadOnly = true;
         feedlyService.getStreamContents(streamId, unreadOnly, new Callback<StreamContents>() {
             @Override
-            public void success(StreamContents streamContents, Response response) {
+            public void success(final StreamContents streamContents, Response response) {
                 EntryAdapter adapter = new EntryAdapter(HomeActivity.this, streamContents.getItems());
                 entriesListView.setAdapter(adapter);
+                entriesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent = EntryActivity.newIntent(HomeActivity.this, streamContents.getItems());
+                        startActivity(intent);
+                    }
+                });
                 loading.setVisibility(View.GONE);
             }
 
