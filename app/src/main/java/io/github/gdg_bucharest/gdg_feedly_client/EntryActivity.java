@@ -26,7 +26,7 @@ public class EntryActivity extends FragmentActivity {
     public static Intent newIntent(Context context, List<Entry> entries) {
         Intent intent = new Intent(context, EntryActivity.class);
         Bundle extras = new Bundle();
-        extras.putParcelableArray(ENTRIES, entries.toArray(new Entry[] {}));
+        extras.putParcelableArray(ENTRIES, entries.toArray(new Entry[]{}));
         intent.putExtras(extras);
         return intent;
     }
@@ -50,6 +50,12 @@ public class EntryActivity extends FragmentActivity {
         Parcelable[] parcelables = savedInstanceState.getParcelableArray(ENTRIES);
         Entry[] entries = Arrays.copyOf(parcelables, parcelables.length, Entry[].class);
         this.entries = Arrays.asList(entries);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArray(ENTRIES, entries.toArray(new Entry[] {}));
     }
 
     public List<Fragment> getFragments() {

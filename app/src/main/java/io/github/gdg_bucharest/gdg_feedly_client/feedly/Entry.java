@@ -11,6 +11,7 @@ public class Entry implements Parcelable {
     private String author;
     private String title;
     private Summary summary;
+    private Summary content;
 
     public String getAuthor() {
         return author;
@@ -36,6 +37,16 @@ public class Entry implements Parcelable {
         this.summary = summary;
     }
 
+    public Summary getContent() {
+        return content;
+    }
+
+    public void setContent(Summary content) {
+        this.content = content;
+    }
+
+    public Entry() {
+    }
 
     @Override
     public int describeContents() {
@@ -46,19 +57,18 @@ public class Entry implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.author);
         dest.writeString(this.title);
-        dest.writeParcelable(this.summary, flags);
-    }
-
-    public Entry() {
+        dest.writeParcelable(this.summary, 0);
+        dest.writeParcelable(this.content, 0);
     }
 
     private Entry(Parcel in) {
         this.author = in.readString();
         this.title = in.readString();
         this.summary = in.readParcelable(Summary.class.getClassLoader());
+        this.content = in.readParcelable(Summary.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<Entry> CREATOR = new Parcelable.Creator<Entry>() {
+    public static final Creator<Entry> CREATOR = new Creator<Entry>() {
         public Entry createFromParcel(Parcel source) {
             return new Entry(source);
         }

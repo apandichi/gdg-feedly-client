@@ -36,11 +36,28 @@ public class EntryPageFragment extends Fragment {
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(ENTRY, entry);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_entry_page, container, false);
 
-        TextView messageTextView = (TextView) view.findViewById(R.id.entry_page_title);
-        messageTextView.setText(entry.getTitle());
+        TextView title = (TextView) view.findViewById(R.id.entry_page_title);
+        title.setText(entry.getTitle());
+
+        TextView author = (TextView) view.findViewById(R.id.entry_page_author);
+        author.setText(entry.getAuthor());
+
+        if (entry.getContent() != null) {
+            TextView content = (TextView) view.findViewById(R.id.entry_page_content);
+            content.setText(entry.getContent().getContent());
+        } else if (entry.getSummary() != null) {
+            TextView content = (TextView) view.findViewById(R.id.entry_page_content);
+            content.setText(entry.getSummary().getContent());
+        }
 
         return view;
 
