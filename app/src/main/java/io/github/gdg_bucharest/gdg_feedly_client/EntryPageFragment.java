@@ -1,5 +1,6 @@
 package io.github.gdg_bucharest.gdg_feedly_client;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -11,9 +12,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 import java.io.FileNotFoundException;
@@ -74,10 +79,21 @@ public class EntryPageFragment extends Fragment {
             content = entry.getSummary().getContent();
         }
 
-        final TextView contentTextView = (TextView) view.findViewById(R.id.entry_page_content);
-        contentTextView.setText(Html.fromHtml(content, new UILImageGetter(contentTextView, getActivity()), null));
+//        final TextView contentTextView = (TextView) view.findViewById(R.id.entry_page_content);
+//        contentTextView.setText(Html.fromHtml(content, new UILImageGetter(contentTextView, getActivity()), null));
+        WebView webView = (WebView) view.findViewById(R.id.webview_content);
+        webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        webView.loadData(content, "text/html", "UTF-8");
 
         return view;
 
     }
+
+//    private int getScale(){
+//        Display display = ((WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+//        int width = display.getWidth();
+//        Double val = new Double(width)/new Double(PIC_WIDTH);
+//        val = val * 100d;
+//        return val.intValue();
+//    }
 }
