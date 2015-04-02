@@ -21,12 +21,14 @@ import io.github.gdg_bucharest.gdg_feedly_client.feedly.Entry;
 public class EntryActivity extends FragmentActivity {
 
     public static final String ENTRIES = "entries";
+    public static final String POSITION = "POSITION";
     private List<Entry> entries;
 
-    public static Intent newIntent(Context context, List<Entry> entries) {
+    public static Intent newIntent(Context context, List<Entry> entries, int position) {
         Intent intent = new Intent(context, EntryActivity.class);
         Bundle extras = new Bundle();
         extras.putParcelableArray(ENTRIES, entries.toArray(new Entry[]{}));
+        extras.putInt(POSITION, position);
         intent.putExtras(extras);
         return intent;
     }
@@ -44,6 +46,7 @@ public class EntryActivity extends FragmentActivity {
         EntryPageAdapter pageAdapter = new EntryPageAdapter(getSupportFragmentManager(), fragments);
         ViewPager pager = (ViewPager) findViewById(R.id.viewpager);
         pager.setAdapter(pageAdapter);
+        pager.setCurrentItem(savedInstanceState.getInt(POSITION));
     }
 
     private void extractEntries(Bundle savedInstanceState) {
@@ -56,6 +59,8 @@ public class EntryActivity extends FragmentActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArray(ENTRIES, entries.toArray(new Entry[] {}));
+        ViewPager pager = (ViewPager) findViewById(R.id.viewpager);
+        outState.putInt(POSITION, pager.getCurrentItem());
     }
 
     public List<Fragment> getFragments() {

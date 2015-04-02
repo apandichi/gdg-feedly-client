@@ -84,7 +84,7 @@ public class HomeActivity extends ActionBarActivity {
                 entriesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent intent = EntryActivity.newIntent(HomeActivity.this, streamContents.getItems());
+                        Intent intent = EntryActivity.newIntent(HomeActivity.this, streamContents.getItems(), position);
                         startActivity(intent);
                     }
                 });
