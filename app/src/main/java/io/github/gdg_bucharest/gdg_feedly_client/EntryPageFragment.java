@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 
 import io.github.gdg_bucharest.gdg_feedly_client.feedly.Entry;
 
@@ -72,6 +73,10 @@ public class EntryPageFragment extends Fragment {
         TextView author = (TextView) view.findViewById(R.id.entry_page_author);
         author.setText(entry.getAuthor());
 
+        TextView published = (TextView) view.findViewById(R.id.entry_page_published);
+        SimpleDateFormat format = new SimpleDateFormat("dd MMM yyyy HH:mm");
+        published.setText(format.format(entry.getPublished()));
+
         String content = null;
         if (entry.getContent() != null) {
             content = entry.getContent().getContent();
@@ -82,7 +87,7 @@ public class EntryPageFragment extends Fragment {
         WebView webView = (WebView) view.findViewById(R.id.webview_content);
         webView.setBackgroundColor(getResources().getColor(R.color.background_material_light));
         webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        webView.loadData(content, "text/html", null);
+        webView.loadData(content, "text/html; charset=UTF-8", null);
 
         return view;
 

@@ -3,6 +3,8 @@ package io.github.gdg_bucharest.gdg_feedly_client.feedly;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Date;
+
 /**
  * Created by pndl on 3/19/15.
  */
@@ -12,6 +14,15 @@ public class Entry implements Parcelable {
     private String title;
     private Summary summary;
     private Summary content;
+    private Date published;
+
+    public Date getPublished() {
+        return published;
+    }
+
+    public void setPublished(Date published) {
+        this.published = published;
+    }
 
     public String getAuthor() {
         return author;
@@ -48,6 +59,7 @@ public class Entry implements Parcelable {
     public Entry() {
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -59,6 +71,7 @@ public class Entry implements Parcelable {
         dest.writeString(this.title);
         dest.writeParcelable(this.summary, 0);
         dest.writeParcelable(this.content, 0);
+        dest.writeLong(published != null ? published.getTime() : -1);
     }
 
     private Entry(Parcel in) {
@@ -66,6 +79,8 @@ public class Entry implements Parcelable {
         this.title = in.readString();
         this.summary = in.readParcelable(Summary.class.getClassLoader());
         this.content = in.readParcelable(Summary.class.getClassLoader());
+        long tmpPublished = in.readLong();
+        this.published = tmpPublished == -1 ? null : new Date(tmpPublished);
     }
 
     public static final Creator<Entry> CREATOR = new Creator<Entry>() {
