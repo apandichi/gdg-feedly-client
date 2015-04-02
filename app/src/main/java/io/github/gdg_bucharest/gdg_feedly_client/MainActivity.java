@@ -81,7 +81,7 @@ public class MainActivity extends ActionBarActivity {
                     .tokenLocation("https://sandbox.feedly.com/v3/auth/token")
                     .setGrantType(GrantType.AUTHORIZATION_CODE)
                     .setClientId("sandbox")
-                    .setClientSecret("8LDQOW8KPYFPCQV2UL6J")
+                    .setClientSecret("4205DQXBAP99S8SUHXI3")
                     .setRedirectURI("http://localhost")
                     .setCode(code)
                     .buildQueryMessage();

@@ -79,21 +79,13 @@ public class EntryPageFragment extends Fragment {
             content = entry.getSummary().getContent();
         }
 
-//        final TextView contentTextView = (TextView) view.findViewById(R.id.entry_page_content);
-//        contentTextView.setText(Html.fromHtml(content, new UILImageGetter(contentTextView, getActivity()), null));
         WebView webView = (WebView) view.findViewById(R.id.webview_content);
+        webView.setBackgroundColor(getResources().getColor(R.color.background_material_light));
         webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        webView.loadData(content, "text/html", "UTF-8");
+        webView.loadData(content, "text/html", null);
 
         return view;
 
     }
 
-//    private int getScale(){
-//        Display display = ((WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-//        int width = display.getWidth();
-//        Double val = new Double(width)/new Double(PIC_WIDTH);
-//        val = val * 100d;
-//        return val.intValue();
-//    }
 }
