@@ -3,11 +3,9 @@
     android:layout_height="wrap_content"
     android:layout_width="fill_parent">
 
-    <item android:id="@+id/action_search"
+    <item android:id="@+id/action_share"
         android:icon="@drawable/abc_ic_search_api_mtrl_alpha"
-        android:title="Search"/>
-    <item android:id="@+id/action_compose"
-        android:icon="@drawable/abc_btn_check_to_on_mtrl_015"
-        android:title="Check" />
+        android:title="Share"/>
+
 
 </menu>

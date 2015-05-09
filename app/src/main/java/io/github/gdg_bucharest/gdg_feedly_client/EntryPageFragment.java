@@ -104,4 +104,7 @@ public class EntryPageFragment extends Fragment {
 
     }
 
+    public Entry getEntry() {
+        return entry;
+    }
 }

@@ -19,8 +19,8 @@ public class EntryPageAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public Fragment getItem(int i) {
-        return this.fragments.get(i);
+    public EntryPageFragment getItem(int i) {
+        return (EntryPageFragment) this.fragments.get(i);
     }
 
     @Override
