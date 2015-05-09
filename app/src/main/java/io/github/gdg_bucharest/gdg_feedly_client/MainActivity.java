@@ -44,27 +44,12 @@ public class MainActivity extends ActionBarActivity {
             return;
         }
 
-        WebView webview = new WebView(this) {};
-        webview.getSettings().setJavaScriptEnabled(true);
-        webview.setVisibility(View.VISIBLE);
-        webview.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                if (url != null && url.startsWith("http://localhost")) {
-                    Uri uri = Uri.parse(url);
-                    String code = uri.getQueryParameter("code");
-                    System.out.println(code);
-                    requestAccessToken(code);
-                    return true;
-                }
-                return false;
-            }
-        });
+        WebView webview = createWebView();
         setContentView(webview);
+        createOAuthRequest(webview);
+    }
 
-//        setContentView(R.layout.activity_main);
-
-
+    private void createOAuthRequest(WebView webview) {
         try {
             // http://simpleprogrammer.com/2011/05/25/oauth-and-rest-in-android-part-1/
             // https://cwiki.apache.org/confluence/display/OLTU/OAuth+2.0+Client+Quickstart
@@ -77,11 +62,31 @@ public class MainActivity extends ActionBarActivity {
                     .setParameter("scope", "https://cloud.feedly.com/subscriptions")
                     .setParameter("response_type", "code")
                     .buildQueryMessage();
-
             webview.loadUrl(request.getLocationUri());
         } catch (OAuthSystemException e) {
             e.printStackTrace();
+            // show a retry button
         }
+    }
+
+    private WebView createWebView() {
+        WebView webview = new WebView(this) {};
+        webview.getSettings().setJavaScriptEnabled(true);
+        webview.setVisibility(View.VISIBLE);
+        webview.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                if (url == null || !url.startsWith("http://localhost")) {
+                    return false;
+                }
+                Uri uri = Uri.parse(url);
+                String code = uri.getQueryParameter("code");
+                System.out.println(code);
+                requestAccessToken(code);
+                return true;
+            }
+        });
+        return webview;
     }
 
     private void requestAccessToken(String code) {
