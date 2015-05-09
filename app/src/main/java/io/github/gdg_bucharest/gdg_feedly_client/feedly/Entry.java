@@ -3,7 +3,9 @@ package io.github.gdg_bucharest.gdg_feedly_client.feedly;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by pndl on 3/19/15.
@@ -15,6 +17,7 @@ public class Entry implements Parcelable {
     private Summary summary;
     private Summary content;
     private Date published;
+    private List<Origin> alternate;
 
     public Date getPublished() {
         return published;
@@ -56,6 +59,14 @@ public class Entry implements Parcelable {
         this.content = content;
     }
 
+    public List<Origin> getAlternate() {
+        return alternate;
+    }
+
+    public void setAlternate(List<Origin> alternate) {
+        this.alternate = alternate;
+    }
+
     public Entry() {
     }
 
@@ -72,6 +83,7 @@ public class Entry implements Parcelable {
         dest.writeParcelable(this.summary, 0);
         dest.writeParcelable(this.content, 0);
         dest.writeLong(published != null ? published.getTime() : -1);
+        dest.writeList(this.alternate);
     }
 
     private Entry(Parcel in) {
@@ -81,6 +93,8 @@ public class Entry implements Parcelable {
         this.content = in.readParcelable(Summary.class.getClassLoader());
         long tmpPublished = in.readLong();
         this.published = tmpPublished == -1 ? null : new Date(tmpPublished);
+        this.alternate = new ArrayList<Origin>();
+        in.readList(this.alternate, Origin.class.getClassLoader());
     }
 
     public static final Creator<Entry> CREATOR = new Creator<Entry>() {
@@ -92,4 +106,8 @@ public class Entry implements Parcelable {
             return new Entry[size];
         }
     };
+
+    public String getOriginUrl() {
+        return getAlternate().get(0).getHref();
+    }
 }

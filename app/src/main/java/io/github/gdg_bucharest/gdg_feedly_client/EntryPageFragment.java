@@ -74,7 +74,7 @@ public class EntryPageFragment extends Fragment {
         title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "http://www.google.ro";
+                String url = entry.getOriginUrl();
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(url));
                 startActivity(i);
