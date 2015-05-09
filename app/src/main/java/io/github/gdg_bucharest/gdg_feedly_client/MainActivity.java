@@ -41,6 +41,7 @@ public class MainActivity extends ActionBarActivity {
         if (feedlyServiceProvider.getAccessToken() != null) {
             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
             startActivity(intent);
+            finish();
             return;
         }
 
@@ -119,6 +120,7 @@ public class MainActivity extends ActionBarActivity {
 
                     Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                     startActivity(intent);
+                    finish();
                 }
             }.execute();
         } catch (OAuthSystemException e) {
