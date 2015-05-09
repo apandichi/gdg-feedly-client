@@ -1,11 +1,13 @@
 package io.github.gdg_bucharest.gdg_feedly_client;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LevelListDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -69,6 +71,15 @@ public class EntryPageFragment extends Fragment {
 
         TextView title = (TextView) view.findViewById(R.id.entry_page_title);
         title.setText(entry.getTitle());
+        title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "http://www.google.ro";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        });
 
         TextView author = (TextView) view.findViewById(R.id.entry_page_author);
         author.setText(entry.getAuthor());
