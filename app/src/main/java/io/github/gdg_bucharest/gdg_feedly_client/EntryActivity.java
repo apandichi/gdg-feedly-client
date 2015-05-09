@@ -1,5 +1,6 @@
 package io.github.gdg_bucharest.gdg_feedly_client;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +8,9 @@ import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -18,7 +22,7 @@ import io.github.gdg_bucharest.gdg_feedly_client.feedly.Entry;
 /**
  * Created by pndl on 3/29/15.
  */
-public class EntryActivity extends FragmentActivity {
+public class EntryActivity extends ActionBarActivity {
 
     public static final String ENTRIES = "entries";
     public static final String POSITION = "POSITION";
@@ -47,6 +51,8 @@ public class EntryActivity extends FragmentActivity {
         ViewPager pager = (ViewPager) findViewById(R.id.viewpager);
         pager.setAdapter(pageAdapter);
         pager.setCurrentItem(savedInstanceState.getInt(POSITION));
+
+
     }
 
     private void extractEntries(Bundle savedInstanceState) {
@@ -61,6 +67,14 @@ public class EntryActivity extends FragmentActivity {
         outState.putParcelableArray(ENTRIES, entries.toArray(new Entry[] {}));
         ViewPager pager = (ViewPager) findViewById(R.id.viewpager);
         outState.putInt(POSITION, pager.getCurrentItem());
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_entry_page, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     public List<Fragment> getFragments() {
