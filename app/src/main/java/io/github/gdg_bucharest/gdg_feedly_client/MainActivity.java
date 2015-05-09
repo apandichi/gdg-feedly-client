@@ -28,6 +28,8 @@ import io.github.gdg_bucharest.gdg_feedly_client.slidingmenu.AttachExample;
 
 public class MainActivity extends ActionBarActivity {
 
+    FeedlyServiceProvider feedlyServiceProvider = new FeedlyServiceProvider(MainActivity.this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +37,12 @@ public class MainActivity extends ActionBarActivity {
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
         ImageLoader.getInstance().init(config);
+
+        if (feedlyServiceProvider.getAccessToken() != null) {
+            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+            startActivity(intent);
+            return;
+        }
 
         WebView webview = new WebView(this) {};
         webview.getSettings().setJavaScriptEnabled(true);
@@ -101,7 +109,6 @@ public class MainActivity extends ActionBarActivity {
 
                 @Override
                 protected void onPostExecute(OAuthAccessTokenResponse oAuthAccessTokenResponse) {
-                    FeedlyServiceProvider feedlyServiceProvider = new FeedlyServiceProvider(MainActivity.this);
                     feedlyServiceProvider.setAccessToken(oAuthAccessTokenResponse.getAccessToken());
                     feedlyServiceProvider.setRefreshToken(oAuthAccessTokenResponse.getRefreshToken());
 
