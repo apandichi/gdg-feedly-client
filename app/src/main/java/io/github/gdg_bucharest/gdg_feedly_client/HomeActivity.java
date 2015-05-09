@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
@@ -109,7 +110,16 @@ public class HomeActivity extends ActionBarActivity {
         menu.setMenu(R.layout.drawer);
         menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
 
-
+        TextView logout = (TextView) findViewById(R.id.logout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new FeedlyServiceProvider(HomeActivity.this).setAccessToken(null);
+                Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void requestCategories() {

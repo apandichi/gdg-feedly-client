@@ -10,10 +10,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <!-- The navigation drawer -->
-    <ExpandableListView android:id="@+id/left_drawer"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:dividerHeight="0dp"/>
+        android:orientation="vertical" >
+
+
+        <!-- The navigation drawer -->
+        <ExpandableListView android:id="@+id/left_drawer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:dividerHeight="0dp"/>
+
+        <TextView
+            android:id="@+id/logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:paddingTop="@dimen/activity_horizontal_margin"
+            android:paddingBottom="@dimen/activity_horizontal_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:text="Log out"/>
+
+
+    </LinearLayout>
+
+
+
+
 
 </android.support.v4.widget.DrawerLayout>
