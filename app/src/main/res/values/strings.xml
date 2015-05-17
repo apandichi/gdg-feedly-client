@@ -8,5 +8,7 @@
     <string name="title_activity_categories">Categories</string>
     <string name="title_activity_subscriptions">Subscriptions</string>
     <string name="title_activity_entry">Entry</string>
+    <string name="title_activity_feedly_authenticator">GDG Feedly Account</string>
+    <string name="account_name">GDG</string>
 
 </resources>

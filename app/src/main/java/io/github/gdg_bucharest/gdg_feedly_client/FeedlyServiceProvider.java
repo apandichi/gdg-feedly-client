@@ -1,9 +1,18 @@
 package io.github.gdg_bucharest.gdg_feedly_client;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.accounts.AuthenticatorException;
+import android.accounts.OperationCanceledException;
 import android.content.Context;
+
+import java.io.IOException;
+
+import io.github.gdg_bucharest.gdg_feedly_client.auth.FeedlyAuthenticatorActivity;
 
 /**
  * Created by pndl on 2/20/15.
+ * // TODO get rid of this class
  */
 public class FeedlyServiceProvider {
 
@@ -37,7 +46,12 @@ public class FeedlyServiceProvider {
     }
 
     public String getAccessToken() {
-        return context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
-                .getString(ACCESS_TOKEN, null);
+        try {
+            return AccountManager.get(context).blockingGetAuthToken(
+                FeedlyAuthenticatorActivity.account, FeedlyAuthenticatorActivity.authTokenType, false
+            );
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
