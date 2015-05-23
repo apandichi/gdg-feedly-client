@@ -30,6 +30,7 @@ public class FeedlyContract {
 
         public static final String TABLE_NAME = "category";
 
+        public static final String COLUMN_ID = "id";
         public static final String COLUMN_LABEL = "label";
 
         public static Uri buildLocationUri(long id) {
