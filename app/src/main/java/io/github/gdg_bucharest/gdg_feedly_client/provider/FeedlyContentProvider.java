@@ -11,7 +11,7 @@ import android.net.Uri;
  */
 public class FeedlyContentProvider extends ContentProvider {
 
-    private static final int FEEDLY = 100;
+    private static final int FEEDLY = 100; //TODO: may not be used at all. remove
 
     private static final int CATEGORY = 200;
     private static final int CATEGORY_ID = 201;
@@ -41,7 +41,15 @@ public class FeedlyContentProvider extends ContentProvider {
 
     @Override
     public String getType(Uri uri) {
-        return null;
+        final int match = uriMatcher.match(uri);
+        switch (match) {
+            case CATEGORY:
+                return FeedlyContract.CategoryEntry.CONTENT_TYPE;
+            case CATEGORY_ID:
+                return FeedlyContract.CategoryEntry.CONTENT_ITEM_TYPE;
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        }
     }
 
     @Override
