@@ -61,6 +61,11 @@
             <meta-data android:name="android.accounts.AccountAuthenticator"
                 android:resource="@xml/authenticator" />
         </service>
+
+        <provider
+            android:name=".provider.FeedlyContentProvider"
+            android:authorities="io.github.gdg_bucharest.gdg_feedly_client" />
+
     </application>
 
 </manifest>

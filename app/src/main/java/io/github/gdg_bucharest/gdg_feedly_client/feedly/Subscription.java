@@ -23,7 +23,6 @@ public class Subscription {
     private String iconUrl;
     private String visualUrl;
     private String coverUrl;
-    // https://www.google.com/s2/favicons?domain=www.filmreporter.ro&alt=feed
 
     private String coverColor;
     private List<String> topics;

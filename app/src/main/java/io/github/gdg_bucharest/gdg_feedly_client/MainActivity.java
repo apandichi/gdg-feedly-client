@@ -40,10 +40,12 @@ public class MainActivity extends ActionBarActivity {
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
         ImageLoader.getInstance().init(config);
 
-        if (feedlyServiceProvider.getAccessToken() != null) {
-            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-            startActivity(intent);
-            finish();
+        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+        startActivity(intent);
+        finish();
+
+        /*if (feedlyServiceProvider.getAccessToken() != null) {
+
             return;
         }
 
@@ -57,7 +59,7 @@ public class MainActivity extends ActionBarActivity {
             }
         });
         setContentView(webviewAuthentication.createWebView());
-        webviewAuthentication.createOAuthRequest();
+        webviewAuthentication.createOAuthRequest();*/
     }
 
 
