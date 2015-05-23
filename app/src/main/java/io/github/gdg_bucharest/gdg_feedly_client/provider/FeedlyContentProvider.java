@@ -2,6 +2,7 @@ package io.github.gdg_bucharest.gdg_feedly_client.provider;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
+import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
 
@@ -9,6 +10,24 @@ import android.net.Uri;
  * Created by pndl on 5/23/15.
  */
 public class FeedlyContentProvider extends ContentProvider {
+
+    private static final int FEEDLY = 100;
+
+    private static final int CATEGORY = 200;
+    private static final int CATEGORY_ID = 201;
+
+
+    private static final UriMatcher uriMatcher = buildUriMatcher();
+
+    private static UriMatcher buildUriMatcher() {
+        final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
+        final String authority = FeedlyContract.CONTENT_AUTHORITY;
+
+        matcher.addURI(authority, FeedlyContract.PATH_CATEGORY, CATEGORY);
+        matcher.addURI(authority, FeedlyContract.PATH_CATEGORY+ "/#", CATEGORY_ID);
+
+        return matcher;
+    }
 
     @Override
     public boolean onCreate() {

@@ -1,6 +1,7 @@
 package io.github.gdg_bucharest.gdg_feedly_client.provider;
 
 import android.content.ContentUris;
+import android.content.UriMatcher;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
