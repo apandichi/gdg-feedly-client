@@ -1,9 +1,11 @@
 package io.github.gdg_bucharest.gdg_feedly_client.provider;
 
 import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
 /**
@@ -18,6 +20,7 @@ public class FeedlyContentProvider extends ContentProvider {
 
 
     private static final UriMatcher uriMatcher = buildUriMatcher();
+    private FeedlyDatabase database;
 
     private static UriMatcher buildUriMatcher() {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -31,12 +34,29 @@ public class FeedlyContentProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        return false;
+        database = new FeedlyDatabase(getContext());
+        return true;
     }
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        return null;
+        Cursor cursor = getCursor(uri, projection, selection, selectionArgs, sortOrder);
+        cursor.setNotificationUri(getContext().getContentResolver(), uri);
+        return cursor;
+
+    }
+
+    private Cursor getCursor(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        switch (uriMatcher.match(uri)) {
+            case CATEGORY:
+                return database.getReadableDatabase().query(FeedlyContract.CategoryEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+            case CATEGORY_ID:
+                return database.getReadableDatabase().query(FeedlyContract.CategoryEntry.TABLE_NAME, projection,
+                        FeedlyContract.CategoryEntry._ID + " = '" + ContentUris.parseId(uri) + "'",
+                        null, null, null, sortOrder);
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        }
     }
 
     @Override
@@ -54,7 +74,22 @@ public class FeedlyContentProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        return null;
+        Uri insertedUri = insertAndBuildUri(uri, values);
+        getContext().getContentResolver().notifyChange(uri, null);
+        return insertedUri;
+    }
+
+    private Uri insertAndBuildUri(Uri uri, ContentValues values) {
+        final SQLiteDatabase db = database.getWritableDatabase();
+        final int match = uriMatcher.match(uri);
+        switch (match) {
+            case CATEGORY:
+                long id = db.insertOrThrow(FeedlyContract.CategoryEntry.TABLE_NAME, null, values);
+                return FeedlyContract.CategoryEntry.buildLocationUri(id);
+            default: {
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+            }
+        }
     }
 
     @Override

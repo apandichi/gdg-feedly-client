@@ -29,11 +29,11 @@ public class FeedlyDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + Tables.BLOCKS + " ("
+        db.execSQL("CREATE TABLE " + Tables.CATEGORY + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + FeedlyContract.CategoryEntry.COLUMN_ID + " TEXT NOT NULL,"
                 + FeedlyContract.CategoryEntry.COLUMN_ID + " TEXT NOT NULL,"
-                + "UNIQUE (" + BlocksColumns.BLOCK_ID + ") ON CONFLICT REPLACE)");
+                + "UNIQUE (" + FeedlyContract.CategoryEntry.COLUMN_ID + ") ON CONFLICT REPLACE)");
     }
 
     @Override
